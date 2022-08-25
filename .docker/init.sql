@@ -1,20 +1,22 @@
-CREATE DATABASE rating_db;
+CREATE DATABASE review_db;
 
-CREATE TABLE ratings_avarages (
-	rating_id serial4 NOT NULL,
-	rating_hash_id VARCHAR (38) NOT NULL,
-	rating_item_id VARCHAR NOT null,
-	rating_avg NUMERIC NOT NULL,
-	rating_start_i INTEGER DEFAULT 1 NOT NULL,
-	rating_start_i_count NUMERIC DEFAULT 0 NOT NULL,
-	rating_start_ii INTEGER DEFAULT 2 NOT NULL,
-	rating_start_ii_count NUMERIC DEFAULT 0 NOT NULL,
-	rating_start_iii INTEGER DEFAULT 3 NOT NULL,
-	rating_start_iii_count NUMERIC DEFAULT 0 NOT NULL,
-	rating_start_iv INTEGER DEFAULT 4 NOT NULL,
-	rating_start_iv_count NUMERIC DEFAULT 0 NOT NULL,
-	rating_start_x INTEGER DEFAULT 5 NOT NULL,
-	rating_start_x_count NUMERIC DEFAULT 0 NOT NULL,
-	CONSTRAINT ratings_pkey PRIMARY KEY (rating_id),
-	UNIQUE(rating_item_id, rating_hash_id)
+CREATE EXTENSION IF NOT EXISTS "uuid-ossp";
+
+CREATE TABLE reviews (
+	review_id serial4 NOT NULL,
+	review_hash_id UUID NOT NULL DEFAULT uuid_generate_v1(),
+	review_item_id VARCHAR NOT NULL,
+	CONSTRAINT reviews_pkey PRIMARY KEY (review_id),
+	UNIQUE(review_hash_id, review_item_id)
+);
+
+CREATE TABLE review_comments (
+	review_comments_id serial4 NOT NULL,
+	review_hash_id VARCHAR NOT NULL,
+	review_comment VARCHAR (200) NOT NULL,
+	review_customer_id VARCHAR (58) NOT NULL,
+	review_order_id VARCHAR (100),
+	review_datatime timestamp DEFAULT CURRENT_TIMESTAMP
+	CONSTRAINT review_comments_pkey PRIMARY KEY (review_comments_id),
+	CONSTRAINT fk_reviews FOREIGN KEY(review_hash_id) REFERENCES reviews(review_hash_id)
 );

@@ -10,18 +10,18 @@ var (
 )
 
 type PutReviewRepository interface {
-	PutNewReview(ctx context.Context, itemId string, review string) error
+	PutNewReview(ctx context.Context, itemId string, comment string) error
 }
 
 type ReviewInput struct {
-	ItemId string `json:"item_id"`
-	Review string `json:"review"`
+	ItemId  string `json:"item_id"`
+	Comment string `json:"comment"`
 }
 
 func PutReview(ctx context.Context, reviewInput *ReviewInput, db PutReviewRepository) error {
 
-	isValid := reviewInput == nil || len(reviewInput.ItemId) == 0 || len(reviewInput.Review) == 0
-	if !isValid {
+	isInvalid := reviewInput == nil || len(reviewInput.ItemId) == 0 || len(reviewInput.Comment) == 0
+	if isInvalid {
 		return ErrPutRatingInputInvalid
 	}
 

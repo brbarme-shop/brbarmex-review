@@ -12,7 +12,7 @@ type repository struct {
 	db *sql.DB
 }
 
-func (r *repository) PutNewReview(ctx context.Context, itemId string, review string) error {
+func (r *repository) PutNewReview(ctx context.Context, itemId string, comment string) error {
 
 	_sql := `sql`
 

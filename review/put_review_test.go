@@ -75,6 +75,6 @@ type repositoryMock struct {
 	putNewReview func() error
 }
 
-func (r *repositoryMock) PutNewReview(ctx context.Context, itemId string, comment string) error {
+func (r *repositoryMock) PutNewReview(ctx context.Context, itemId, comment, curstomerId, orderId string)error {
 	return r.putNewReview()
 }

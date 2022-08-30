@@ -38,5 +38,5 @@ func postReview(c *gin.Context) {
 		return
 	}
 
-	c.IndentedJSON(http.StatusOK, nil)
+	c.IndentedJSON(http.StatusCreated, nil)
 }

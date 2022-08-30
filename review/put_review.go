@@ -10,12 +10,14 @@ var (
 )
 
 type PutReviewRepository interface {
-	PutNewReview(ctx context.Context, itemId string, comment string) error
+	PutNewReview(ctx context.Context, itemId, comment, curstomerId, orderId string) error
 }
 
 type ReviewInput struct {
-	ItemId  string `json:"item_id"`
-	Comment string `json:"comment"`
+	ItemId     string `json:"item_id"`
+	Comment    string `json:"comment"`
+	CustomerId string `json:"customer_id"`
+	OrderId    string `json:"order_id"`
 }
 
 func PutReview(ctx context.Context, reviewInput *ReviewInput, db PutReviewRepository) error {
@@ -25,5 +27,5 @@ func PutReview(ctx context.Context, reviewInput *ReviewInput, db PutReviewReposi
 		return ErrPutRatingInputInvalid
 	}
 
-	return db.PutNewReview(ctx, reviewInput.ItemId, reviewInput.ItemId)
+	return db.PutNewReview(ctx, reviewInput.ItemId, reviewInput.Comment, reviewInput.CustomerId, reviewInput.OrderId)
 }
